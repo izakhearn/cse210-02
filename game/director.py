@@ -1,5 +1,5 @@
 from game.card import Card
-from lib.input import InputValidation as Validate
+from validators.InputVal import InputValidation as Validate
 
 
 class Director:
@@ -8,10 +8,9 @@ class Director:
     The responsibility of a Director is to control the sequence of play.
 
     Attributes:
-        dice (List[Die]): A list of Die instances.
+        card : An instance of the class of objects known as Card.
         is_playing (boolean): Whether or not the game is being played.
-        score (int): The score for one round of play.
-        total_score (int): The score for the entire game.
+        score (int): The score of the player.
     """
 
     def __init__(self):
@@ -23,7 +22,6 @@ class Director:
         self.card = Card()
         self.is_playing = True
         self.score = 300
-        self.total_score = 0
         self.current_card = ''
 
 
@@ -39,14 +37,12 @@ class Director:
     
     def get_inputs(self):
         """Gets the inputs at the beginning of each round of play. In this case,
-        that means getting a new card.
-
-        Args:
-            self (Director): An instance of Director.
+        that means getting a new card if no card has been played other wise it will set current_card to
+        newCard.
         """
         if self.current_card == '':
             self.current_card = self.card.random_card()
-        print (f"\nCurrent card is the {self.current_card[1]} of ", end='')
+        print (f"\nNext Card is: {self.current_card[1]} of ", end='')
         self.draw_card_image()
         self.player_input = input("Higher or lower? [h/l] ")
         while Validate.Choices(self,self.player_input,["H", "L","h","l"]) == False:
@@ -86,9 +82,6 @@ class Director:
     def do_outputs(self):
         """Outputs the important game information for each round of play. In 
         this case, that means the card and the score.
-
-        Args:
-            self (Director): An instance of Director.
         """
         self.do_checkCards()
         print (f"Next card is the {self.newCard[1]} of ", end='')
@@ -96,6 +89,7 @@ class Director:
         print(f"Your score is {self.score}.")
         if self.score == 0:
             print("You lose!")
+            self.is_playing = False
         else:
             self.play_again = input("Keep playing? [y/n] ")
             while Validate.YesNo(self,self.play_again) == False:
