@@ -39,6 +39,8 @@ class Director:
         """Gets the inputs at the beginning of each round of play. In this case,
         that means getting a new card if no card has been played other wise it will set current_card to
         newCard.
+        Args:
+            self (Director): An instance of Director.
         """
         if self.current_card == '':
             self.current_card = self.card.random_card()
@@ -53,7 +55,10 @@ class Director:
 
     
     def do_checkCards(self):
-        '''Check if the new card is higher or lower than the current card.'''
+        '''Check if the new card is higher or lower than the current card.
+        Args:
+            self (Director): An instance of Director.
+        '''
         if self.player_input == "h":
             if self.newCard[1] > self.current_card[1]:
                 self.score += 100
@@ -69,7 +74,10 @@ class Director:
             self.is_playing = False
 
     def draw_card_image(self):
-        '''Draw the card image.'''
+        '''Draw the card image.
+        Args:
+            self (Director): An instance of Director.
+        '''
         if self.current_card[0] == "Hearts":
             print("♥")
         elif self.current_card[0] == "Diamonds":
@@ -82,12 +90,15 @@ class Director:
     def do_outputs(self):
         """Outputs the important game information for each round of play. In 
         this case, that means the card and the score.
+
+        Args:
+            self (Director): An instance of Director.
         """
         self.do_checkCards()
         print (f"Next card is the {self.newCard[1]} of ", end='')
         self.draw_card_image()
         print(f"Your score is {self.score}.")
-        if self.score == 0:
+        if self.score <= 0:
             print("You lose!")
             self.is_playing = False
         else:
