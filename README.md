@@ -88,3 +88,9 @@ To hold an instance of the game running and print out the scores and card values
 draw_card_image     Draws the appropriate icon for the class 
                     suite
 ```
+
+-------
+
+## Author : Izak Hearn
+
+## Email : izak@gmail.com
